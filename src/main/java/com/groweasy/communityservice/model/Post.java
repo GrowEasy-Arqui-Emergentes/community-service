@@ -35,7 +35,8 @@ public class Post {
     @Column(name = "description", length =150, nullable=false)
     private String description;
 
-    @Column(name = "text", nullable=false)
+    @Column(name = "text", columnDefinition = "TEXT", nullable=false)
+    @Lob
     private String text;
 
     @Column(name = "views", length =6, nullable=false)
