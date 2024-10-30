@@ -35,6 +35,13 @@ public class PostController {
         return new ResponseEntity<List<Post>>(postRepository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+        return postRepository.findById(id)
+                .map(post -> new ResponseEntity<>(post, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     //@PostMapping("/posts")
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
