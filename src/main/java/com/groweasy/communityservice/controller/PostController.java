@@ -41,7 +41,17 @@ public class PostController {
                 .map(post -> new ResponseEntity<>(post, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+    @PatchMapping("/{id}/update")
+    public ResponseEntity<Post> update(@PathVariable Long id, @RequestBody Post updatedPost) {
+        return postRepository.findById(id)
+                .map(post -> {
+                    post.setViews(updatedPost.getViews());
+                    post.setLikes(updatedPost.getLikes());
+                    postRepository.save(post);
+                    return new ResponseEntity<>(post, HttpStatus.OK);
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     //@PostMapping("/posts")
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
